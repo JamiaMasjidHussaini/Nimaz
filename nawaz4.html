@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jamia Masjid Hussaini</title>
+<style>body{margin:0;font-family:system-ui;background:#fff}.top{background:#0f7a56;color:#fff;text-align:center;padding:18px}.wrap{max-width:800px;margin:auto;padding:14px}.tabs{display:flex;gap:10px}.tabs button{flex:1;padding:11px;border:2px solid #0f7a56;background:#fff;color:#0f7a56;border-radius:10px;font-weight:700;font-size:16px}.tabs button.on{background:#0f7a56;color:#fff}.nav{display:flex;justify-content:center;align-items:center;gap:14px;margin:16px 0}.nav button{width:40px;height:40px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:20px}.nav b{font-size:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid #eee;border-radius:14px;padding:14px;text-align:center}.card b{display:block;font-size:20px;color:#0f7a56;margin-top:4px}table{width:100%;border-collapse:collapse;font-size:13px}th{background:#0f7a56;color:#fff;padding:8px}td{padding:7px;border-bottom:1px solid #eee;text-align:center}.note{text-align:center;color:#666}</style></head>
+<body>
+<div class="top"><h1>🕌 Jamia Masjid Hussaini</h1><p>Usta Muhammad, Balochistan • Prayer Times</p></div>
+<div class="wrap">
+<div class="tabs"><button id="bD" class="on" onclick="setMode('d')">Daily</button><button id="bM" onclick="setMode('m')">Monthly</button></div>
+<div class="nav"><button onclick="move(-1)">‹</button><b id="title">Loading...</b><button onclick="move(1)">›</button></div>
+<div id="box"></div>
+<p class="note">Timing har saal yahi rahe gi. Jumma ki namaz 1:30 PM par ada ki jaye gi.</p>
+</div>
+<script>
+var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var T=[["6:08 AM","7:25 AM","12:35 PM","4:10 PM","5:35 PM","7:05 PM"],["5:55 AM","7:10 AM","12:40 PM","4:30 PM","5:55 PM","7:20 PM"],["5:25 AM","6:40 AM","12:40 PM","4:50 PM","6:20 PM","7:45 PM"],["4:50 AM","6:10 AM","12:40 PM","5:05 PM","6:45 PM","8:10 PM"],["4:20 AM","5:40 AM","12:40 PM","5:20 PM","7:10 PM","8:40 PM"],["4:10 AM","5:25 AM","12:45 PM","5:30 PM","7:25 PM","9:00 PM"],["4:20 AM","5:35 AM","12:50 PM","5:30 PM","7:20 PM","8:55 PM"],["4:40 AM","5:50 AM","12:50 PM","5:20 PM","7:05 PM","8:30 PM"],["5:00 AM","6:05 AM","12:45 PM","5:00 PM","6:35 PM","7:55 PM"],["5:20 AM","6:25 AM","12:40 PM","4:35 PM","6:05 PM","7:25 PM"],["5:40 AM","6:50 AM","12:30 PM","4:10 PM","5:35 PM","7:00 PM"],["6:00 AM","7:15 AM","12:35 PM","4:00 PM","5:25 PM","6:50 PM"]];
+var mode='d',cur=new Date();
+function setMode(x){mode=x;document.getElementById('bD').className=x=='d'?'on':'';document.getElementById('bM').className=x=='m'?'on':'';render()}
+function move(k){if(mode=='d')cur.setDate(cur.getDate()+k);else cur.setMonth(cur.getMonth()+k);render()}
+function render(){
+var y=cur.getFullYear(),m=cur.getMonth(),d=cur.getDate();
+document.getElementById('title').textContent=mode=='d'?days[cur.getDay()]+", "+d+" "+months[m]+" "+y:months[m]+" "+y;
+var names=["Fajr","Sunrise","Zuhr","Asr","Maghrib","Isha"];
+var html="";
+if(mode=='d'){html='<div class="grid">';for(var i=0;i<6;i++){html+='<div class="card">'+names[i]+'<b>'+T[m][i]+'</b></div>'}html+='</div>';}
+else{var daysIn=new Date(y,m+1,0).getDate();html='<table><tr><th>Date</th><th>Fajr</th><th>Sunrise</th><th>Zuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th></tr>';for(var dd=1;dd<=daysIn;dd++){html+='<tr><td>'+dd+'</td>';for(var j=0;j<6;j++)html+='<td>'+T[m][j]+'</td>';html+='</tr>'}html+='</table>';}
+document.getElementById('box').innerHTML=html;
+}
+render();
+</script></body></html>
