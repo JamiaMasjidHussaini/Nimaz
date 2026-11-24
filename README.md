@@ -1,1 +1,1 @@
-# Nimaz
+Namaz timings updated# Nimaz
